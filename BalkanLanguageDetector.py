@@ -5,6 +5,7 @@ Created on Sun Jan 31 20:40:37 2021
 @author: Nenad Milosevic
 """
 
+import sys
 import numpy as np
 from sklearn import datasets
 from sklearn import model_selection
@@ -22,7 +23,7 @@ dataset = datasets.load_files('short_paragraphs')
 cplt.CreateAndShowHistogramPlot("Number of articles by language:", dataset)
 
 #separate data to data for training and data for test
-data_train, data_test, y_train, y_test = model_selection.train_test_split(dataset.data, dataset.target, test_size = 0.33, stratify = dataset.target)
+data_train, data_test, y_train, y_test = model_selection.train_test_split(dataset.data, dataset.target, test_size = 0.2, stratify = dataset.target)
 
 #Tfid stands for term frequency-inverse document frequency
 vectorizer = TfidfVectorizer(ngram_range=(1, 3), analyzer='char', use_idf = False, min_df=5)
@@ -47,4 +48,17 @@ print(metrics.classification_report(y_test, y_predicted))
 #Let's start with some random input in language
 languageCode = model.predict(vectorizer.transform(["Поранешниот специјалец Спасов е осуден на казна затвор од 14 години за убиството на Мартин"]))
 
-print(np.array(dataset.target_names)[languageCode])
+arrayOfTargetNames = np.array(dataset.target_names)
+
+
+while True:
+    
+    sentence = input()
+    
+    if sentence == 'q':
+        break
+
+    languageCode = model.predict(vectorizer.transform([sentence]))
+    print("This is: " + str(arrayOfTargetNames[languageCode][0]) + " language")
+        
+    
