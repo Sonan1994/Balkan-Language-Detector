@@ -45,9 +45,6 @@ y_predicted = model.predict(X_test)
 #Show statistics
 print(metrics.classification_report(y_test, y_predicted))
 
-#Let's start with some random input in language
-languageCode = model.predict(vectorizer.transform(["Поранешниот специјалец Спасов е осуден на казна затвор од 14 години за убиството на Мартин"]))
-
 arrayOfTargetNames = np.array(dataset.target_names)
 
 
